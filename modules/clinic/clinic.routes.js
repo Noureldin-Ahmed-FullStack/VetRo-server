@@ -1,11 +1,12 @@
 import express from 'express'
 import { upload } from '../../src/middleware/FileUpload/uploads.js'
 import { getAllClinics, addClinic, GetSingleClinic, updateClinicCover, updateClinic, } from './clinic.controller.js'
+import { getUserHeader } from '../../src/middleware/middleware.js'
 
 const clinicRouter = express.Router()
 
 clinicRouter.get('/clinic', getAllClinics)
-clinicRouter.post('/clinic',addClinic)
+clinicRouter.post('/clinic',getUserHeader,addClinic)
 clinicRouter.get('/clinic/:id', GetSingleClinic)
 clinicRouter.put('/clinicUpload/:id', upload.single('file'), updateClinicCover)
 clinicRouter.put('/clinic/:id', upload.single('file'), updateClinic)

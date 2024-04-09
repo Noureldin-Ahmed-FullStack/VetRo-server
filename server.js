@@ -5,6 +5,7 @@ import petRouter from './modules/pet/pet.routes.js'
 import cors from "cors"
 import speciesRouter from './modules/SpeciesIdentifier/SpeciesIdentifier.routes.js'
 import postRouter from './modules/post/post.routes.js'
+import clinicRouter from './modules/clinic/clinic.routes.js'
 
 const app = express()
 const port = 3000
@@ -15,6 +16,7 @@ app.use(userRouter)
 app.use(petRouter)
 app.use(speciesRouter)
 app.use(postRouter)
+app.use(clinicRouter)
 app.use((err, req, res, next) => {
   res.json({ error: err })
 })

@@ -8,9 +8,11 @@ export const checkEmailExist = async(req,res,next)=>{
     next()
 }
 export const getUserHeader = async(req,res,next)=>{
+    if (!req.headers.token) {
+        return res.json({message: "You are not logged in"})
+    }
     let decoded = jwt.verify(req.headers.token, 'key');
     req.user = decoded
-    console.log(decoded);
     next()
 }
 export const GetSingleUser = catchError(async(req,res,next) => {

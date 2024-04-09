@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const schema = new mongoose.Schema({
     clinicName:{
         type: String,
-        unique:[true, 'name is required'],
         trim:true,
         required:true,
         minLength:[2,'name is too short']

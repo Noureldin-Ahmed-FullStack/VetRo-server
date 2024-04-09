@@ -2,6 +2,7 @@
 import slugify from "slugify"
 import { catchError } from "../../src/middleware/catchError.js"
 import { petModel } from "../../Models/Pet.model.js"
+import { userModel } from "../../Models/user.model.js"
 
 import { v2 as cloudinary } from 'cloudinary';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,6 +13,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 const addPet= catchError(async (req, res) => {
     const pet = await petModel.create(req.body)
+    await userModel.findByIdAndUpdate(
+        req.user.uid,
+        { $push: { pets: pet.id } },
+        { new: true } // Return the updated document after update
+      );
     res.json({ message: "success" })
 })
 const getAllpets = catchError(async (req, res) => {

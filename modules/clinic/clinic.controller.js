@@ -5,6 +5,7 @@ import { clinicModel } from "../../Models/clinic.model.js"
 
 import { v2 as cloudinary } from 'cloudinary';
 import { v4 as uuidv4 } from 'uuid';
+import { userModel } from "../../Models/user.model.js";
 
 
 
@@ -12,6 +13,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 const addClinic = catchError(async (req, res) => {
     const clinic = await clinicModel.create(req.body)
+    await userModel.findByIdAndUpdate(
+        req.user.uid,
+        { $push: { clinics: clinic.id } },
+        { new: true } // Return the updated document after update
+      );
     res.json({ message: "success" })
 })
 const getAllClinics = catchError(async (req, res) => {
