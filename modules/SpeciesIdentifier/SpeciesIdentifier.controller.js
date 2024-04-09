@@ -29,7 +29,7 @@ const IdentifyImage = catchError(async (req, res) => {
         api_secret: "Nht0PwGG8HmJt14MpdKDK4E79Uc"
     });
     await cloudinary.uploader.upload(req.file.path,
-        { public_id: req.file.originalname },
+        { public_id: req.file.originalname + "-" + uuidv4()},
         async function (error, result) {
             console.log(result.secure_url);
             // await userModel.findByIdAndUpdate(req.params.id, { profilePicture: result.secure_url })

@@ -7,7 +7,6 @@ const signUpSchemaValidation = joi.object({
     email: joi.string().email().required(),
     password: joi.string().required(),
     repassword: joi.valid(joi.ref('password')).required(),
-    age:joi.number().integer().min(10).required()
 })
 const validationError = signUpSchemaValidation.validate(req.body)
 if (validationError.error) {

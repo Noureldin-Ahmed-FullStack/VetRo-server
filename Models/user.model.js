@@ -1,39 +1,59 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-    name:{
+    name: {
         type: String,
-        trim:true,
-        required:true,
-        minLength:[2,'name is too short']
+        trim: true,
+        required: true,
+        minLength: [2, 'name is too short']
     },
-    email:{
-        type:String,
-        required:true,
+    email: {
+        type: String,
+        required: true,
 
-    },   
-    profilePicture:{
-        type:String,
+    },
+
+    About: {
+        type: String,
         required: false,
         default: ""
     },
-    password:String,
-    Validated:{
-        type:Boolean,
-        default:false
+    userPFP: {
+        type: String,
+        required: false,
+        default: ""
     },
-    role:{
-        type:String,
-        enum:['user','admin'],
-        default:'user'
+    password: String,
+    // Validated:{
+    //     type:Boolean,
+    //     default:false
+    // },
+    isDoctor: {
+        type: Boolean,
+        default: false
     },
-    wishlist:[{type: mongoose.Types.ObjectId, ref:'product'}],
-    addresses: [
+    phoneNumber: String,
+    role: {
+        type: String,
+        enum: ['user', 'admin', 'doctor'],
+        default: 'user'
+    },
+    decided: {
+        type: Boolean,
+        default: false
+    },
+    pets: [
         {
-            street:String,
-            phone: String,
-            city: String,
-        }
+            type: mongoose.Types.ObjectId,
+            ref: 'Pets'
+        },
+    ],
+
+    clinics: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'Clinics'
+        },
     ]
 })
-export const userModel =mongoose.model("user", schema)
+export const userModel = mongoose.model("user", schema)

@@ -1,24 +1,26 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-    categoryName:{
+    petName:{
         type: String,
         unique:[true, 'name is required'],
         trim:true,
         required:true,
         minLength:[2,'name is too short']
     },
-    slug:{
-        type:String,
-        lowercase:true,
-        required:true
-    },
     image:String,
-    createdBy:{
+    age:{
+        type:Number,
+        min: 0,
+        max: 100
+    },
+    gender:Boolean,
+    breed:String,
+    type:String,
+    userID:{
         type:mongoose.Types.ObjectId,
         ref: 'user'
-    },
-    coverImage: String
+    }
     
 })
-export const categoryModel =mongoose.model("category", schema)
+export const petModel = mongoose.model("pet", schema)
