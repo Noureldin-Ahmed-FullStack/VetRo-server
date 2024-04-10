@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
+   
     name: {
         type: String,
         trim: true,
@@ -45,14 +46,14 @@ const schema = new mongoose.Schema({
     pets: [
         {
             type: mongoose.Types.ObjectId,
-            ref: 'Pets'
+            ref: 'pet'
         },
     ],
 
     clinics: [
         {
             type: mongoose.Types.ObjectId,
-            ref: 'Clinics'
+            ref: 'clinic'
         },
     ]
 })

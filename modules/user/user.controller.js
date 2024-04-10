@@ -13,19 +13,24 @@ import { v4 as uuidv4 } from 'uuid';
 
 const ContactMe = catchError(async (req, res) => {
     const user = await req.body
-    try {        
-        await sendEmail(user.name,user.email,user.phone,user.message,user.reciver)
+    try {
+        await sendEmail(user.name, user.email, user.phone, user.message, user.reciver)
     } catch (error) {
-        res.json({ message: "Error", error:error })        
+        res.json({ message: "Error", error: error })
     }
     res.json({ message: "success" })
 })
 
 const signUp = catchError(async (req, res) => {
-
+    req.body.userPFP = 'https://ssniper.sirv.com/Images/unknown.jpg'
     const user = await userModel.create(req.body)
     console.log(user._id);
     // sendEmail(user._id,user.email)
+    res.json({ message: "success" })
+})
+const setUserRole = catchError(async (req, res) => {
+    const isDoctor = req.body.isDoctor
+    await userModel.findByIdAndUpdate(req.user.uid, { isDoctor: isDoctor, decided: true })
     res.json({ message: "success" })
 })
 const getAllUsers = catchError(async (req, res) => {
@@ -40,7 +45,7 @@ export const GetSingleUser = catchError(async (req, res, next) => {
     next()
 })
 export const GetSingleUserRes = catchError(async (req, res, next) => {
-    const users = await userModel.findById(req.params.id).populate('wishlist')
+    const users = await userModel.findById(req.params.id).populate('pets').populate('clinics')
     if (!users) {
         return res.json({ message: "user doesnt exist" })
     }
@@ -87,8 +92,8 @@ const updateUserPic = catchError(async (req, res) => {
     });
     await cloudinary.uploader.upload(req.file.path,
         { public_id: uuidv4() + "-" + req.file.originalname },
-        async function (error, result) { 
-            console.log(result); 
+        async function (error, result) {
+            console.log(result);
             await userModel.findByIdAndUpdate(req.params.id, { profilePicture: result.secure_url })
 
         });
@@ -96,11 +101,11 @@ const updateUserPic = catchError(async (req, res) => {
 })
 const addtoWishlist = catchError(async (req, res) => {
     let decoded = jwt.verify(req.headers.token, 'key');
-    let wishlist = await userModel.findByIdAndUpdate(decoded.uid, {$addToSet :{wishlist:req.body.product} },{new:true})
+    let wishlist = await userModel.findByIdAndUpdate(decoded.uid, { $addToSet: { wishlist: req.body.product } }, { new: true })
     if (!wishlist) {
-        return res.json({message: "wishlist not found"})
+        return res.json({ message: "wishlist not found" })
     }
-    res.json({message: "success"})
+    res.json({ message: "success" })
 })
 
 
@@ -111,5 +116,6 @@ export {
     Validate,
     updateUserPic,
     addtoWishlist,
-    ContactMe
+    ContactMe,
+    setUserRole
 }

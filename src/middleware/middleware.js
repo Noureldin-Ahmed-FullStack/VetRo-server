@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 
 export const checkEmailExist = async(req,res,next)=>{
     let user = await userModel.findOne({email:req.body.email})
-    if(user) return res.json({message: "email already exists!"})
+    if(user) return res.status(409).json({message: "email already exists!"}).sta
     next()
 }
 export const getUserHeader = async(req,res,next)=>{
