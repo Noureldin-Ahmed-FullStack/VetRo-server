@@ -4,12 +4,12 @@ import jwt from "jsonwebtoken"
 
 export const checkEmailExist = async(req,res,next)=>{
     let user = await userModel.findOne({email:req.body.email})
-    if(user) return res.status(409).json({message: "email already exists!"}).sta
+    if(user) return res.status(409).json({message: "email already exists!"})
     next()
 }
 export const getUserHeader = async(req,res,next)=>{
     if (!req.headers.token) {
-        return res.json({message: "You are not logged in"})
+        return res.status(409).json({message: "You are not logged in"})
     }
     let decoded = jwt.verify(req.headers.token, 'key');
     req.user = decoded

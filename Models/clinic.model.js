@@ -14,6 +14,9 @@ const schema = new mongoose.Schema({
     },
    
     address:String,
+    schedule:String,
+    availability:String,
+    phoneNumber:String,
     userID:{
         type:mongoose.Types.ObjectId,
         ref: 'user'

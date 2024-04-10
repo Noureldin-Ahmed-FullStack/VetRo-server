@@ -83,7 +83,25 @@ const verify = catchError((req, res) => {
     )
 })
 
+const updateUser = catchError(async (req, res) => {
+    if (req.file) {
+        cloudinary.config({
+            cloud_name: 'dqijwldax',
+            api_key: '764827226872981',
+            api_secret: "Nht0PwGG8HmJt14MpdKDK4E79Uc"
+        });
+        await cloudinary.uploader.upload(req.file.path,
+            { public_id: uuidv4() + "-" + req.file.originalname },
+            async function (error, result) {
+                console.log(result);
+                req.body.userPFP = result.secure_url
 
+            });
+    }
+
+    await userModel.findByIdAndUpdate(req.params.id, req.body)
+    res.json({ message: success });
+})
 const updateUserPic = catchError(async (req, res) => {
     cloudinary.config({
         cloud_name: 'dqijwldax',
@@ -93,11 +111,10 @@ const updateUserPic = catchError(async (req, res) => {
     await cloudinary.uploader.upload(req.file.path,
         { public_id: uuidv4() + "-" + req.file.originalname },
         async function (error, result) {
-            console.log(result);
-            await userModel.findByIdAndUpdate(req.params.id, { profilePicture: result.secure_url })
-
+            console.log(result.secure_url);
+            await userModel.findByIdAndUpdate(req.params.id, { userPFP: result.secure_url })
+            res.json({ message: "success" })
         });
-    res.json(req.file);
 })
 const addtoWishlist = catchError(async (req, res) => {
     let decoded = jwt.verify(req.headers.token, 'key');
@@ -115,6 +132,7 @@ export {
     getAllUsers,
     Validate,
     updateUserPic,
+    updateUser,
     addtoWishlist,
     ContactMe,
     setUserRole
