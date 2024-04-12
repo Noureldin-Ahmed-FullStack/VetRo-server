@@ -9,7 +9,7 @@ clinicRouter.get('/clinic', getAllClinics)
 clinicRouter.post('/clinic',getUserHeader, upload.single('file'),checkForImgMiddleWare,addClinic)
 clinicRouter.get('/clinic/:id', GetSingleClinic)
 clinicRouter.put('/clinicUpload/:id', upload.single('file'), updateClinicCover)
-clinicRouter.put('/clinic/:id', upload.single('file'), updateClinic)
+clinicRouter.put('/clinic/:id', upload.single('file'),checkForImgMiddleWare, updateClinic)
 // clinicRouter.delete('/clinic/:id', deleteclinic)
 clinicRouter.post('/clinicImageUpdate/:id', upload.single('file'), updateClinicCover)
  

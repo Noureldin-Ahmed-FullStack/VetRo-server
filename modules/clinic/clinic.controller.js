@@ -17,17 +17,22 @@ const checkForImgMiddleWare = catchError(async (req, res, next) => {
         await cloudinary.uploader.upload(req.file.path,
             { public_id: uuidv4() + "-" + req.file.originalname },
             async function (error, result) {
-                console.log(result);
                 req.body.image = result.secure_url
                 next()
             });
+    }else{
+        next()
+
     }
-    next()
 })
 
 
 
 const addClinic = catchError(async (req, res) => {
+    console.log(req.body);
+    if (!req.body.image) {
+        req.body.image = 'https://ssniper.sirv.com/Images/clinic.jpg'
+    }
     const clinic = await clinicModel.create(req.body)
     await userModel.findByIdAndUpdate(
         req.user.uid,
@@ -48,6 +53,7 @@ const GetSingleClinic = catchError(async (req, res, next) => {
     res.json(clinic)
 })
 const updateClinic = catchError(async (req, res, next) => {
+    console.log(req.body);
     let clinic = await clinicModel.findByIdAndUpdate(req.params.id, req.body)
     if (!clinic) {
         return res.status(404).json({ message: "clinic doesnt exist" })

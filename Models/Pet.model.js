@@ -13,7 +13,7 @@ const schema = new mongoose.Schema({
         min: 0,
         max: 100
     },
-    gender:Boolean,
+    gender:String,
     breed:String,
     type:String,
     userID:{

@@ -65,7 +65,7 @@ const signIn = catchError(async (req, res) => {
         return res.json({ message: "hello " + user.name, token })
     }
 
-    return res.json({ message: "Email or password is incorrect!" })
+    return res.status(409).json({ message: "Email or password is incorrect!" })
     // if (user.Validated) {
     //     if (user && bcrypt.compareSync(req.body.password, user.password)) {
     //         let token = jwt.sign({ uid: user._id, email: user.email }, 'key')

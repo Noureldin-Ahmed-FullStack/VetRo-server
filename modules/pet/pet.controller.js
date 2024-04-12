@@ -11,39 +11,45 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
-const addPet= catchError(async (req, res) => {
+const addPet = catchError(async (req, res) => {
+    console.log(req.body);
+    if (!req.body.image) {
+        req.body.image = 'https://t4.ftcdn.net/jpg/01/18/91/73/360_F_118917333_uEdOfPd69Hiqi3q69KUWnU6YCpUgG1v1.jpg'
+    }
     const pet = await petModel.create(req.body)
     await userModel.findByIdAndUpdate(
         req.user.uid,
         { $push: { pets: pet.id } },
         { new: true } // Return the updated document after update
-      );
+    );
     res.json({ message: "success" })
 })
 const getAllpets = catchError(async (req, res) => {
     const pets = await petModel.find()
     res.json(pets)
 })
-const GetSinglePet= catchError(async (req, res, next) => {
+const GetSinglePet = catchError(async (req, res, next) => {
     const pet = await petModel.findById(req.params.id)
     if (!pet) {
         return res.json({ message: "Petdoesnt exist" })
     }
     res.json(pet)
 })
-const updatePet= catchError(async (req, res, next) => {
-    let pet =  await petModel.findByIdAndUpdate(req.params.id, req.body)
+const updatePet = catchError(async (req, res, next) => {
+    let pet = await petModel.findByIdAndUpdate(req.params.id, req.body)
+    console.log(req.body);
+
     if (!pet) {
-        return res.status(404).json({message:"Petdoesnt exist"})
+        return res.status(404).json({ message: "Petdoesnt exist" })
     }
-    res.json({message:"Petupdated"})
+    res.json({ message: "Petupdated" })
 })
-const deletePet= catchError(async (req, res, next) => {
-    let pet =  await petModel.findByIdAndDelete(req.params.id)
+const deletePet = catchError(async (req, res, next) => {
+    let pet = await petModel.findByIdAndDelete(req.params.id)
     if (!pet) {
-        return res.status(404).json({message:"Petdoesnt exist"})
+        return res.status(404).json({ message: "Petdoesnt exist" })
     }
-    res.json({message:"deleted"})
+    res.json({ message: "deleted" })
 
 })
 
@@ -55,8 +61,8 @@ const updatepetCover = catchError(async (req, res) => {
     });
     await cloudinary.uploader.upload(req.file.path,
         { public_id: uuidv4() + "-" + req.file.originalname },
-        async function (error, result) { 
-            console.log(result); 
+        async function (error, result) {
+            console.log(result);
             await petModel.findByIdAndUpdate(req.params.id, { image: result.secure_url })
 
         });

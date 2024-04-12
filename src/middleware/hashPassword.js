@@ -10,7 +10,7 @@ const signUpSchemaValidation = joi.object({
 })
 const validationError = signUpSchemaValidation.validate(req.body)
 if (validationError.error) {
-    return res.status(409).json({validation_Error: validationError})
+    return res.status(409).json({message: validationError.error.details[0].message})
 }
 next()
 
