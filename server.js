@@ -6,6 +6,7 @@ import cors from "cors"
 import speciesRouter from './modules/SpeciesIdentifier/SpeciesIdentifier.routes.js'
 import postRouter from './modules/post/post.routes.js'
 import clinicRouter from './modules/clinic/clinic.routes.js'
+import appointmentRouter from './modules/appointment/appointment.routes.js'
 
 const app = express()
 const port = 3000
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors())
 app.use(express.json())
 app.use(userRouter)
+app.use(appointmentRouter)
 app.use(petRouter)
 app.use(speciesRouter)
 app.use(postRouter)
@@ -22,4 +24,4 @@ app.use((err, req, res, next) => {
 })
 app.get('/', (req, res) => res.send('Hello World!'))
 dbConnection()
-app.listen(process.env.PORT || port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(process.env.PORT || port, () => console.log(`Server Running 👾 ¯\_(ツ)_/¯`))
