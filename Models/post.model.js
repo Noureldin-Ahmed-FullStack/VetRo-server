@@ -21,6 +21,10 @@ const postSchema = new mongoose.Schema({
     images: [{
         type: String
     }],
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'comment', 
+    }],
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user', // Reference to User model (author of the post)

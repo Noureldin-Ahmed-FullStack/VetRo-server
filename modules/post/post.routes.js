@@ -4,7 +4,6 @@ import { upload } from '../../src/middleware/FileUpload/uploads.js'
 import { getUserHeader } from '../../src/middleware/middleware.js'
 
 const postRouter = express.Router()
-getAllUrgentPosts
 postRouter.get('/post', getAllPosts)
 postRouter.get('/urgentPost', getAllUrgentPosts)
 postRouter.post('/post',getUserHeader,addPost)
