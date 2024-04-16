@@ -37,6 +37,10 @@ const getAllUsers = catchError(async (req, res) => {
     const users = await userModel.find()
     res.json(users)
 })
+export const getAllDoctors = catchError(async (req, res) => {
+    const users = await userModel.find({isDoctor:true})
+    res.json(users)
+})
 export const GetSingleUser = catchError(async (req, res, next) => {
     const users = await userModel.findById(req.params.id)
     if (!users) {

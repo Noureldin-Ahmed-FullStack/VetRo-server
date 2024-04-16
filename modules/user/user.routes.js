@@ -1,6 +1,6 @@
 import express from 'express'
 import {checkEmailExist, getUserHeader } from '../../src/middleware/middleware.js'
-import { ContactMe, GetSingleUser, GetSingleUserRes, Validate, addtoWishlist, getAllUsers, setUserRole, signIn, signUp, updateUser, updateUserPic } from './user.controller.js'
+import { ContactMe, GetSingleUser, GetSingleUserRes, Validate, addtoWishlist, getAllDoctors, getAllUsers, setUserRole, signIn, signUp, updateUser, updateUserPic } from './user.controller.js'
 import { hashPass, validateShema } from '../../src/middleware/hashPassword.js'
 import { upload } from '../../src/middleware/FileUpload/uploads.js'
 
@@ -11,6 +11,7 @@ userRouter.post('/signIn', signIn)
 userRouter.post('/userRole',getUserHeader, setUserRole)
 userRouter.post('/ContactMe', ContactMe)
 userRouter.get('/users', getAllUsers)
+userRouter.get('/doctors', getAllDoctors)
 userRouter.get('/getSingleUser/:id', GetSingleUserRes)
 userRouter.get('/usersValidation/:id', Validate)
 userRouter.post('/addToWishlist', addtoWishlist)

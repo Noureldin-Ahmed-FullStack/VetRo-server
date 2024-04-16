@@ -35,6 +35,13 @@ const appointmentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'pet',
         required: [true,'pet is required']
+    },
+    bookedTime: {
+        type: String,
+        required: [true,'appointment time is required']
+    },
+    phoneNumber: {
+        type: String,
     }
 }, { timestamps: true });
 export const appointmentModel = mongoose.model("appointment", appointmentSchema)

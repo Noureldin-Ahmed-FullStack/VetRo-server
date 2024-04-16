@@ -9,7 +9,7 @@ const speciesRouter = express.Router()
 
  
 // speciesRouter.post('/upload/:id',GetSingleUser, upload.single('file'), updateUserPic)
-speciesRouter.post('/speciesIdentifier',upload.single('image'),IdentifyImage)
+speciesRouter.post('/speciesIdentifier',upload.single('file'),IdentifyImage)
 
 
 export default speciesRouter
