@@ -31,8 +31,7 @@ const getAppointmentOfDoctor = catchError(async (req, res) => {
     res.json(appointment)
 })
 const getAppointmentOfUser = catchError(async (req, res) => {
-    const user = req.params.id
-    const appointment = await appointmentModel.find({ createdBy: req.params.id }).populate({
+    const appointment = await appointmentModel.find({ createdBy: req.user.uid }).populate({
         path: 'createdBy',
         select: '-password' // Exclude the 'password' field
     }).populate({

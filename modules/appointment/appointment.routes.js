@@ -8,7 +8,7 @@ appointmentRouter.get('/appointment', getAllAppointments)
 appointmentRouter.get('/doctorAppointment',getUserHeader, getAppointmentOfDoctor)
 appointmentRouter.post('/appointment',getUserHeader,addAppointment)
 appointmentRouter.put('/appointment/:id', updateAppointment)
-appointmentRouter.get('/userAppointment/:id', getAppointmentOfUser)
+appointmentRouter.get('/userAppointment',getUserHeader, getAppointmentOfUser)
 appointmentRouter.delete('/appointment/:id', deleteAppointment)
 
 
