@@ -30,6 +30,21 @@ const getAppointmentOfDoctor = catchError(async (req, res) => {
     })
     res.json(appointment)
 })
+const getAppointmentOfUser = catchError(async (req, res) => {
+    const user = req.params.id
+    const appointment = await appointmentModel.find({ createdBy: req.params.id }).populate({
+        path: 'createdBy',
+        select: '-password' // Exclude the 'password' field
+    }).populate({
+        path: 'doctor',
+        select: '-password' // Exclude the 'password' field
+    }).populate({
+        path: 'pet',
+    }).populate({
+        path: 'clinic',
+    })
+    res.json(appointment)
+})
 const getAllAppointments = catchError(async (req, res) => {
     const appointment = await appointmentModel.find().populate({
         path: 'createdBy',
@@ -92,5 +107,6 @@ export {
     getAppointmentOfDoctor,
     getAllAppointments,
     updateAppointment,
-    deleteAppointment
+    deleteAppointment,
+    getAppointmentOfUser
 }
