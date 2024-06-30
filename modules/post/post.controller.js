@@ -42,10 +42,15 @@ const getAllUrgentPosts = catchError(async (req, res) => {
     res.json(posts)
 })
 const GetSinglePost = catchError(async (req, res, next) => {
-    const post = await postModel.findById(req.params.id)
-    if (!post) {
-        return res.status(404).json({ message: "post doesnt exist" })
-    }
+    const post = await postModel.find({ createdBy:req.user.uid }).populate({
+        path: 'createdBy',
+        select: '-password' // Exclude the 'password' field
+    }).populate({
+        path: 'comments',
+        populate: {
+            path: 'createdBy',
+        }
+    }).sort({ createdAt: -1 }).limit(10)
     res.json(post)
 })
 const updatePost = catchError(async (req, res, next) => {
