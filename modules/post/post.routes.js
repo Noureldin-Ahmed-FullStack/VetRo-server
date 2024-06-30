@@ -7,7 +7,7 @@ const postRouter = express.Router()
 postRouter.get('/post', getAllPosts)
 postRouter.get('/urgentPost', getAllUrgentPosts)
 postRouter.post('/post',getUserHeader,addPost)
-postRouter.get('/post/:id',getUserHeader, GetSinglePost)
+postRouter.get('/userPost',getUserHeader, GetSinglePost)
 postRouter.put('/post/:id', updatePost)
 postRouter.delete('/post/:id', deletePost)
 
