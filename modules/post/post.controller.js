@@ -38,7 +38,7 @@ const getAllUrgentPosts = catchError(async (req, res) => {
     const posts = await postModel.find({ urgent:true }).populate({
         path: 'createdBy',
         select: '-password' // Exclude the 'password' field
-    })
+    }).sort({ createdAt: -1 }).limit(10)
     res.json(posts)
 })
 const GetSinglePost = catchError(async (req, res, next) => {
